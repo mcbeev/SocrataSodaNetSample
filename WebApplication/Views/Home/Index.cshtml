@@ -1,0 +1,97 @@
+﻿@model PagedList.IPagedList<WebApplication.Models.BusinessLocation>
+@using PagedList.Mvc;
+<link href="~/Content/Styles/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>Chicago CrossFit Gyms</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        @using (Html.BeginForm("Index", "Home", FormMethod.Get))
+        {
+            <p>
+                Filter Name: @Html.TextBox("SearchQuery", ViewBag.CurrentFilter as string)
+                <input type="submit" value="Search" />
+            </p>
+        }
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-striped table-hover ">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.ActionLink("Legal Name", "Index", new { SortOrder = ViewBag.LastNameSortParm, CurrentFilter = ViewBag.CurrentFilter })
+                    </th>
+                    <th>
+                        @Html.ActionLink("DBA", "Index", new { SortOrder = ViewBag.FirstNameSortParm, CurrentFilter = ViewBag.CurrentFilter })
+                    </th>
+                    <th>
+                        @Html.ActionLink("City", "Index", new { SortOrder = ViewBag.DateSortParm, CurrentFilter = ViewBag.CurrentFilter })
+                    </th>
+                    <th>
+                        @Html.ActionLink("State", "Index", new { SortOrder = ViewBag.DateSortParm, CurrentFilter = ViewBag.CurrentFilter })
+                    </th>
+                    <th>
+                        @Html.ActionLink("Zip", "Index", new { SortOrder = ViewBag.DateSortParm, CurrentFilter = ViewBag.CurrentFilter })
+                    </th>
+                    <th>
+                        @Html.ActionLink("Issued", "Index", new { SortOrder = ViewBag.DateSortParm, CurrentFilter = ViewBag.CurrentFilter })
+                    </th>
+                    <th>
+                        @Html.ActionLink("Latitude", "Index", new { SortOrder = ViewBag.DateSortParm, CurrentFilter = ViewBag.CurrentFilter })
+                    </th>
+                    <th>
+                        @Html.ActionLink("Longitude", "Index", new { SortOrder = ViewBag.DateSortParm, CurrentFilter = ViewBag.CurrentFilter })
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Legal_Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Doing_Business_As_Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.City)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.State)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Zip_Code)
+                    </td>
+                    <td>
+                        @String.Format("{0:MM/dd/yyyy}", item.Date_Issued)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Latitude)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Longitude)
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table> 
+        
+        <br />
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+        @Html.PagedListPager(Model, CurrentPage => Url.Action("Index", new { CurrentPage, SortOrder = ViewBag.CurrentSort, CurrentFilter = ViewBag.CurrentFilter }))
+           
+    </div>
+</div>
