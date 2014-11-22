@@ -8,11 +8,11 @@
 
 <div class="row">
     <div class="col-md-12">
-        <h2>Chicago CrossFit Gyms</h2>
+        <h2>Chicago CrossFit Gyms<small><a href="https://data.cityofchicago.org/Community-Economic-Development/Chicago-Crossfit-Locations/xj6s-q5eb" target="_blank"><i>source data</i></a></small></h2>
     </div>
 </div>
 
-<div class="row">
+<div class="row" style="display:none;">
     <div class="col-md-12">
         @using (Html.BeginForm("Index", "Home", FormMethod.Get))
         {
@@ -26,33 +26,29 @@
 
 <div class="row">
     <div class="col-md-12">
+        <hr class="compact" />
         <table class="table table-striped table-hover ">
             <thead>
                 <tr>
                     <th>
-                        @Html.ActionLink("Legal Name", "Index", new { SortOrder = ViewBag.LastNameSortParm, CurrentFilter = ViewBag.CurrentFilter })
+                        @Html.ActionLink("Legal Name", "Index", new { SortOrder = ViewBag.NameSortParm, CurrentFilter = ViewBag.CurrentFilter })
                     </th>
                     <th>
-                        @Html.ActionLink("DBA", "Index", new { SortOrder = ViewBag.FirstNameSortParm, CurrentFilter = ViewBag.CurrentFilter })
+                        @Html.ActionLink("DBA", "Index", new { SortOrder = ViewBag.DBASortParm, CurrentFilter = ViewBag.CurrentFilter })
                     </th>
                     <th>
-                        @Html.ActionLink("City", "Index", new { SortOrder = ViewBag.DateSortParm, CurrentFilter = ViewBag.CurrentFilter })
+                        City
                     </th>
                     <th>
-                        @Html.ActionLink("State", "Index", new { SortOrder = ViewBag.DateSortParm, CurrentFilter = ViewBag.CurrentFilter })
+                        State
                     </th>
                     <th>
-                        @Html.ActionLink("Zip", "Index", new { SortOrder = ViewBag.DateSortParm, CurrentFilter = ViewBag.CurrentFilter })
+                        @Html.ActionLink("Zip", "Index", new { SortOrder = ViewBag.ZipSortParm, CurrentFilter = ViewBag.CurrentFilter })
                     </th>
                     <th>
-                        @Html.ActionLink("Issued", "Index", new { SortOrder = ViewBag.DateSortParm, CurrentFilter = ViewBag.CurrentFilter })
+                        @Html.ActionLink("Issued", "Index", new { SortOrder = ViewBag.IssuedSortParm, CurrentFilter = ViewBag.CurrentFilter })
                     </th>
-                    <th>
-                        @Html.ActionLink("Latitude", "Index", new { SortOrder = ViewBag.DateSortParm, CurrentFilter = ViewBag.CurrentFilter })
-                    </th>
-                    <th>
-                        @Html.ActionLink("Longitude", "Index", new { SortOrder = ViewBag.DateSortParm, CurrentFilter = ViewBag.CurrentFilter })
-                    </th>
+                    <th>Map</th>
                 </tr>
             </thead>
             <tbody>
@@ -78,10 +74,10 @@
                         @String.Format("{0:MM/dd/yyyy}", item.Date_Issued)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Latitude)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Longitude)
+                        @if (item.Latitude != null) 
+                        { 
+                            <a href="https://google.com/maps/place/@item.Latitude,@item.Longitude" target="_blank"><span class="glyphicon glyphicon-globe"></span></a>
+                        }
                     </td>
                 </tr>
             }

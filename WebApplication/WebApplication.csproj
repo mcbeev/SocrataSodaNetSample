@@ -118,6 +118,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Shared\DisplayTemplates\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -168,6 +169,8 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Content\Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Home\Index - Copy.cshtml" />
+    <None Include="Properties\PublishProfiles\sodanetsample - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\sodanetsample - Web Deploy.pubxml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

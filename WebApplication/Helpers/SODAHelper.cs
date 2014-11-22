@@ -13,42 +13,82 @@ namespace WebApplication.Helpers
 {
     public static class SODAHelper
     {
+        #region Constants
+
+        /// <summary>
+        /// App Token from Socrata registered app - get yours at https://opendata.socrata.com/login
+        /// </summary>
         private const string _AppToken = "362kGqnbRdOUyekysKljkozax";
 
-        //"http://data.cityofchicago.org/resource/xj6s-q5eb.json";
+        /// <summary>
+        /// HostName of "http://data.cityofchicago.org/resource/xj6s-q5eb.json";
+        /// </summary>
         private const string _APIEndPointHost = "data.cityofchicago.org";
         
+        /// <summary>
+        /// Socrata 4x4 Identifier
+        /// </summary>
         private const string _APIEndPoint4x4 = "xj6s-q5eb";
 
+        #endregion
 
-        public static PagedList<BusinessLocation> GetBusinessLocations(int PageNumber, int PageSize)
+
+        #region Methods
+
+        /// <summary>
+        /// Returns meta information about the dataset
+        /// </summary>
+        /// <returns></returns>
+        public static string GetMeta()
         {
-            return GetBusinessLocations(null, PageNumber, PageSize);
+            //Create client to talk to OpenDat API Endpoint
+            var client = new SodaClient(_APIEndPointHost, _AppToken);
+            
+            //read metadata of a dataset using the resource identifier (Socrata 4x4)
+            var metadata = client.GetMetadata(_APIEndPoint4x4);
+
+            return string.Format("{0} has {1} views. Last updated on {2:g}", metadata.Name, metadata.ViewsCount, metadata.RowsLastUpdated);
         }
 
-        public static PagedList<BusinessLocation> GetBusinessLocations(string SearchQuery, int PageNumber, int PageSize)
+        /// <summary>
+        /// Gets all Business Locations in the dataset
+        /// </summary>
+        /// <param name="PageNumber">Current page number</param>
+        /// <param name="PageSize">Number of items per page</param>
+        /// <returns>object PagedList</returns>
+        public static PagedList<BusinessLocation> GetBusinessLocations(int PageNumber, int PageSize)
         {
+            return GetBusinessLocations(null, PageNumber, PageSize, null, true);
+        }
+
+        /// <summary>
+        /// Gets sorted list of all Business Locations in the dataset by filter 
+        /// </summary>
+        /// <param name="SearchQuery">Query to filter on</param>
+        /// <param name="PageNumber">Current page number</param>
+        /// <param name="PageSize">Number of items per page</param>
+        /// <param name="OrderBy">Column name to sequence the list by</param>
+        /// <param name="OrderByAscDesc">Sort direction</param> 
+        /// <returns>object PagedList</returns>
+        public static PagedList<BusinessLocation> GetBusinessLocations(string SearchQuery, int PageNumber, int PageSize, string OrderBy, bool OrderByAscDesc)
+        {
+            //Create client to talk to OpenDat API Endpoint
             var client = new SodaClient(_APIEndPointHost, _AppToken);
 
-            //read metadata of a dataset using the resource identifier (Socrata 4x4)
-            //var metadata = client.GetMetadata(_APIEndPoint4x4);
-            //Console.WriteLine("{0} has {1} views.", metadata.Name, metadata.ViewsCount);
-
-            //get a reference to the resource itself
-            //the result (a Resouce object) is a generic type
+            //get a reference to the resource itself the result (a Resouce object) is a generic type
             //the type parameter represents the underlying rows of the resource
             var dataset = client.GetResource <PagedList<BusinessLocation>>(_APIEndPoint4x4);
 
-            
-            //collections of an arbitrary type can be returned
-            //using SoQL and a fluent query building syntax
             string[] columns = new[] { "legal_name", "doing_business_as_name", "city", "state", "zip_code", "latitude", "longitude", "date_issued" };
             //string[] aliases = new[] { "LegalName", "DBA" };
 
-            var soql = new SoqlQuery().Select(columns);
+            //using SoQL and a fluent query building syntax
+            var soql = new SoqlQuery().Select(columns).Order((OrderByAscDesc) ? SoqlOrderDirection.ASC: SoqlOrderDirection.DESC,  new[] { OrderBy });
+
             if(!string.IsNullOrEmpty(SearchQuery))
             {
-                //soql = new SoqlQuery().FullTextSearch("{0}={1}", "legal_name", SearchQuery);
+                //Uncomment to enable filtering
+                //soql = new SoqlQuery().FullTextSearch(SearchQuery);
             }
 
             var results = dataset.Query<BusinessLocation>(soql);
@@ -58,5 +98,7 @@ namespace WebApplication.Helpers
 
             return pagedResults;
         }
+
+        #endregion
     }
 }
