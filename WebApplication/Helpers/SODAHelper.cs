@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using PagedList;
 using SODA;
-using SODA.Models;
-using SODA.Utilities;
-using System.Data;
+using System.Linq;
 using WebApplication.Models;
-using PagedList;
 
 namespace WebApplication.Helpers
 {
@@ -79,16 +73,20 @@ namespace WebApplication.Helpers
             //the type parameter represents the underlying rows of the resource
             var dataset = client.GetResource <PagedList<BusinessLocation>>(_APIEndPoint4x4);
 
-            string[] columns = new[] { "legal_name", "doing_business_as_name", "city", "state", "zip_code", "latitude", "longitude", "date_issued" };
-            //string[] aliases = new[] { "LegalName", "DBA" };
+            //Build the select list of columns for the SoQL call
+            string[] columns = new[] { "legal_name", "doing_business_as_name", "date_issued", "city", "state", "zip_code", "latitude", "longitude"  };
+            
+            //Column alias must not collide with input column name, i.e. don't alias 'city' as 'city'
+            string[] aliases = new[] { "LegalName", "DBA", "IssuedOn" };
 
             //using SoQL and a fluent query building syntax
-            var soql = new SoqlQuery().Select(columns).Order((OrderByAscDesc) ? SoqlOrderDirection.ASC: SoqlOrderDirection.DESC,  new[] { OrderBy });
+            var soql = new SoqlQuery().Select(columns)
+                .As(aliases)
+                .Order((OrderByAscDesc) ? SoqlOrderDirection.ASC: SoqlOrderDirection.DESC,  new[] { OrderBy });
 
             if(!string.IsNullOrEmpty(SearchQuery))
             {
-                //Uncomment to enable filtering
-                //soql = new SoqlQuery().FullTextSearch(SearchQuery);
+                soql = new SoqlQuery().FullTextSearch(SearchQuery);
             }
 
             var results = dataset.Query<BusinessLocation>(soql);

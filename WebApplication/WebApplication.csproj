@@ -50,8 +50,9 @@
     <Reference Include="PagedList.Mvc">
       <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="SODA">
-      <HintPath>..\packages\CSM.SodaDotNet.0.2.0\lib\net45\SODA.dll</HintPath>
+    <Reference Include="SODA, Version=0.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\CSM.SodaDotNet.0.2.1\lib\net45\SODA.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -168,7 +169,6 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Content\Scripts\jquery-1.10.2.min.map" />
-    <Content Include="Views\Home\Index - Copy.cshtml" />
     <None Include="Properties\PublishProfiles\sodanetsample - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\sodanetsample - Web Deploy.pubxml" />
   </ItemGroup>

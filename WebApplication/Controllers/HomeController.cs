@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using PagedList;
-using WebApplication.Models;
+﻿using System.Web.Mvc;
 using WebApplication.Helpers;
 
 namespace WebApplication.Controllers
 {
     public class HomeController : Controller
     {
-
         public ViewResult Index(string SortOrder, string CurrentFilter, string SearchQuery, int? CurrentPage)
         {
             //Handle Paging
@@ -67,7 +60,5 @@ namespace WebApplication.Controllers
         {
             return View();
         }
-
-
     }
 }

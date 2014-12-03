@@ -12,7 +12,7 @@
     </div>
 </div>
 
-<div class="row" style="display:none;">
+<div class="row">
     <div class="col-md-12">
         @using (Html.BeginForm("Index", "Home", FormMethod.Get))
         {
@@ -56,10 +56,10 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Legal_Name)
+                        @Html.DisplayFor(modelItem => item.LegalName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Doing_Business_As_Name)
+                        @Html.DisplayFor(modelItem => item.DBA)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.City)
@@ -68,10 +68,10 @@
                         @Html.DisplayFor(modelItem => item.State)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Zip_Code)
+                        @Html.DisplayFor(modelItem => item.Zip)
                     </td>
                     <td>
-                        @String.Format("{0:MM/dd/yyyy}", item.Date_Issued)
+                        @String.Format("{0:MM/dd/yyyy}", item.IssuedOn)
                     </td>
                     <td>
                         @if (item.Latitude != null) 
