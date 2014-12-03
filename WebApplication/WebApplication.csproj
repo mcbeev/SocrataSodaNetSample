@@ -129,7 +129,6 @@
     <Compile Include="Helpers\SODAHelper.cs" />
     <Compile Include="Helpers\Utilities.cs" />
     <Compile Include="Models\BusinessLocation.cs" />
-    <Compile Include="Models\Student.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
