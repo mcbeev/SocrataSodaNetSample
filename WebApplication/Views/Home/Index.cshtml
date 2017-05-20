@@ -1,16 +1,21 @@
-﻿@model PagedList.IPagedList<WebApplication.Models.BusinessLocation>
+﻿@model WebApplication.ViewModels.HomeViewModel
 @using PagedList.Mvc;
+
 <link href="~/Content/Styles/PagedList.css" rel="stylesheet" type="text/css" />
 
-@{
-    ViewBag.Title = "Home Page";
-}
 
 <div class="row">
     <div class="col-md-12">
-        <h2>Chicago CrossFit Gyms<small><a href="https://data.cityofchicago.org/Community-Economic-Development/Chicago-Crossfit-Locations/xj6s-q5eb" target="_blank"><i>source data</i></a></small></h2>
+        <h2>@Model.Content.Headline</h2>
     </div>
 </div>
+
+<div class="row">
+    <div class="col-md-12">
+        @Html.Raw(@Model.Content.Bodycontent)
+    </div>
+</div>
+
 
 <div class="row">
     <div class="col-md-12">
@@ -52,7 +57,7 @@
                 </tr>
             </thead>
             <tbody>
-            @foreach (var item in Model)
+            @foreach (var item in Model.BusinessLocations)
             {
                 <tr>
                     <td>
@@ -85,9 +90,9 @@
         </table> 
         
         <br />
-        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+        Page @(Model.BusinessLocations.PageCount < Model.BusinessLocations.PageNumber ? 0 : Model.BusinessLocations.PageNumber) of @Model.BusinessLocations.PageCount
 
-        @Html.PagedListPager(Model, CurrentPage => Url.Action("Index", new { CurrentPage, SortOrder = ViewBag.CurrentSort, CurrentFilter = ViewBag.CurrentFilter }))
+        @Html.PagedListPager(Model.BusinessLocations, CurrentPage => Url.Action("Index", new { CurrentPage, SortOrder = ViewBag.CurrentSort, CurrentFilter = ViewBag.CurrentFilter }))
            
     </div>
 </div>
