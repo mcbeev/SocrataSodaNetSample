@@ -55,6 +55,7 @@ namespace SocrataSodaNet.Populaters
 
             //ViewBag.CurrentFilter = SearchQuery;
 
+
             if (!string.IsNullOrEmpty(SearchQuery))
             {
                 SearchQuery = SearchQuery.ToUpper().Trim();
