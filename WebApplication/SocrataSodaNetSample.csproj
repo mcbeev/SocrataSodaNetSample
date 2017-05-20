@@ -163,6 +163,7 @@
     <None Include="Content\Styles\bootstrap.min.css.old" />
     <Content Include="favicon.ico" />
     <Content Include="Content\Fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Styles\Site.css" />
     <Content Include="Content\Scripts\bootstrap.js" />
@@ -188,6 +189,9 @@
     <Content Include="Views\About\Index.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Content\Scripts\jquery-1.10.2.min.map" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <None Include="Properties\PublishProfiles\sodanetsample - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\sodanetsample - Web Deploy.pubxml" />
     <Content Include="Views\Contact\Index.cshtml" />

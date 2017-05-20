@@ -20,9 +20,10 @@ namespace SocrataSodaNet
                       "~/Content/Scripts/bootstrap.js",
                       "~/Content/Scripts/respond.js"));
 
-            bundles.Add(new StyleBundle("~/style/css/flatly").Include(
+            bundles.Add(new StyleBundle("~/style/flatly").Include(
                       "~/Content/Styles/bootstrap.css",
-                      "~/Content/Styles/site.css"));
+                      "~/Content/Styles/site.css",
+                      "~/Content/Styles/PagedList.css"));
         }
     }
 }
