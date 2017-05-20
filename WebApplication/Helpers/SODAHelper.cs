@@ -86,7 +86,10 @@ namespace SocrataSodaNet.Helpers
 
             if(!string.IsNullOrEmpty(SearchQuery))
             {
-                soql = new SoqlQuery().FullTextSearch(SearchQuery);
+                soql = new SoqlQuery().Select(columns)
+                .As(aliases)
+                .FullTextSearch(SearchQuery)
+                .Order((OrderByAscDesc) ? SoqlOrderDirection.ASC : SoqlOrderDirection.DESC, new[] { OrderBy });
             }
 
             var results = dataset.Query<BusinessLocation>(soql);

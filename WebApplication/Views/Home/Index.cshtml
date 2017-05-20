@@ -19,7 +19,7 @@
         @using (Html.BeginForm("Index", "Home", FormMethod.Get))
         {
             <p>
-                Filter Name: @Html.TextBox("SearchQuery", ViewBag.CurrentFilter as string)
+                Filter Name: @Html.TextBox("SearchQuery", Model.CurrentFilter as string)
                 <input type="submit" value="Search" />
             </p>
         }
@@ -33,10 +33,10 @@
             <thead>
                 <tr>
                     <th>
-                        @Html.ActionLink("Legal Name", "Index", new { SortOrder = ViewBag.NameSortParm, CurrentFilter = ViewBag.CurrentFilter })
+                        @Html.ActionLink("Legal Name", "Index", new { SortOrder = Model.NameSortParm, CurrentFilter = Model.CurrentFilter })
                     </th>
                     <th>
-                        @Html.ActionLink("DBA", "Index", new { SortOrder = ViewBag.DBASortParm, CurrentFilter = ViewBag.CurrentFilter })
+                        @Html.ActionLink("DBA", "Index", new { SortOrder = Model.DBASortParm, CurrentFilter = Model.CurrentFilter })
                     </th>
                     <th>
                         City
@@ -45,10 +45,10 @@
                         State
                     </th>
                     <th>
-                        @Html.ActionLink("Zip", "Index", new { SortOrder = ViewBag.ZipSortParm, CurrentFilter = ViewBag.CurrentFilter })
+                        @Html.ActionLink("Zip", "Index", new { SortOrder = Model.ZipSortParm, CurrentFilter = Model.CurrentFilter })
                     </th>
                     <th>
-                        @Html.ActionLink("Issued", "Index", new { SortOrder = ViewBag.IssuedSortParm, CurrentFilter = ViewBag.CurrentFilter })
+                        @Html.ActionLink("Issued", "Index", new { SortOrder = Model.IssuedSortParm, CurrentFilter = Model.CurrentFilter })
                     </th>
                     <th>Map</th>
                 </tr>

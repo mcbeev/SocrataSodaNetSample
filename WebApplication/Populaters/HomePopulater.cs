@@ -35,11 +35,12 @@ namespace SocrataSodaNet.Populaters
                 SortOrder = "";
             }
 
-            //ViewBag.CurrentSort = SortOrder;
-            //ViewBag.NameSortParm = (SortOrder == "legal_name") ? "legal_name_desc" : "legal_name";
-            //ViewBag.DBASortParm = (SortOrder == "doing_business_as_name") ? "doing_business_as_name_desc" : "doing_business_as_name";
-            //ViewBag.ZipSortParm = (SortOrder == "zip_code") ? "zip_code_desc" : "zip_code";
-            //ViewBag.IssuedSortParm = (SortOrder == "date_issued") ? "date_issued_desc" : "date_issued";
+            ViewModel.CurrentSort = SortOrder;
+
+            ViewModel.NameSortParm = (SortOrder == "legal_name") ? "legal_name_desc" : "legal_name";
+            ViewModel.DBASortParm = (SortOrder == "doing_business_as_name") ? "doing_business_as_name_desc" : "doing_business_as_name";
+            ViewModel.ZipSortParm = (SortOrder == "zip_code") ? "zip_code_desc" : "zip_code";
+            ViewModel.IssuedSortParm = (SortOrder == "date_issued") ? "date_issued_desc" : "date_issued";
 
             bool sortAsc = (!SortOrder.Contains("_desc")) ? true : false;
 
@@ -53,7 +54,7 @@ namespace SocrataSodaNet.Populaters
                 SearchQuery = CurrentFilter;
             }
 
-            //ViewBag.CurrentFilter = SearchQuery;
+            ViewModel.CurrentFilter = SearchQuery;
 
 
             if (!string.IsNullOrEmpty(SearchQuery))
