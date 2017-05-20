@@ -11,12 +11,15 @@ namespace SocrataSodaNet.Controllers
 
         public async Task<ViewResult> Index(string SortOrder, string CurrentFilter, string SearchQuery, int? CurrentPage)
         {
-            return View(await new HomePopulater().PopulateContent(
-                    SortOrder,
-                    CurrentFilter,
-                    SearchQuery,
-                    CurrentPage
-                ));
+            SoQLQueryParams query = new SoQLQueryParams()
+            {
+                SortOrder = SortOrder,
+                CurrentFilter = CurrentFilter,
+                SearchQuery = SearchQuery,
+                CurrentPage = CurrentPage
+            };
+
+            return View(await new HomePopulater().PopulateContent(query));
         }
         
 

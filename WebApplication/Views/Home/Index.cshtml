@@ -19,7 +19,7 @@
         @using (Html.BeginForm("Index", "Home", FormMethod.Get))
         {
             <p>
-                Filter by: @Html.TextBox("SearchQuery", Model.CurrentFilter as string)
+                Filter by: @Html.TextBox("SearchQuery", Model.SoQLParams.CurrentFilter as string)
                 <input type="submit" value="Search" />
             </p>
         }
@@ -33,10 +33,10 @@
             <thead>
                 <tr>
                     <th>
-                        @Html.ActionLink("Legal Name", "Index", new { SortOrder = Model.NameSortParm, CurrentFilter = Model.CurrentFilter })
+                        @Html.ActionLink("Legal Name", "Index", new { SortOrder = Model.SoQLParams.NameSortParm, SearchQuery = Model.SoQLParams.CurrentFilter })
                     </th>
                     <th>
-                        @Html.ActionLink("DBA", "Index", new { SortOrder = Model.DBASortParm, CurrentFilter = Model.CurrentFilter })
+                        @Html.ActionLink("DBA", "Index", new { SortOrder = Model.SoQLParams.DBASortParm, SearchQuery = Model.SoQLParams.CurrentFilter })
                     </th>
                     <th>
                         City
@@ -45,51 +45,54 @@
                         State
                     </th>
                     <th>
-                        @Html.ActionLink("Zip", "Index", new { SortOrder = Model.ZipSortParm, CurrentFilter = Model.CurrentFilter })
+                        @Html.ActionLink("Zip", "Index", new { SortOrder = Model.SoQLParams.ZipSortParm, SearchQuery = Model.SoQLParams.CurrentFilter })
                     </th>
                     <th>
-                        @Html.ActionLink("Issued", "Index", new { SortOrder = Model.IssuedSortParm, CurrentFilter = Model.CurrentFilter })
+                        @Html.ActionLink("Issued", "Index", new { SortOrder = Model.SoQLParams.IssuedSortParm, SearchQuery = Model.SoQLParams.CurrentFilter })
                     </th>
                     <th>Map</th>
                 </tr>
             </thead>
             <tbody>
-            @foreach (var item in Model.BusinessLocations)
+                @foreach (var item in Model.BusinessLocations)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LegalName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DBA)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.City)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.State)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Zip_Code)
-                    </td>
-                    <td>
-                        @String.Format("{0:MM/dd/yyyy}", item.IssuedOn)
-                    </td>
-                    <td>
-                        @if (item.Latitude != null) 
-                        { 
-                            <a href="https://google.com/maps/place/@item.Latitude,@item.Longitude" target="_blank"><span class="glyphicon glyphicon-globe"></span></a>
-                        }
-                    </td>
-                </tr>
-            }
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LegalName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DBA)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.City)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.State)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Zip_Code)
+                        </td>
+                        <td>
+                            @String.Format("{0:MM/dd/yyyy}", item.IssuedOn)
+                        </td>
+                        <td>
+                            @if (item.Latitude != null)
+                            {
+                                <a href="https://google.com/maps/place/@item.Latitude,@item.Longitude" target="_blank"><span class="glyphicon glyphicon-globe"></span></a>
+                            }
+                        </td>
+                    </tr>
+                }
             </tbody>
-        </table> 
-        
+        </table>
+
         <br />
         Page @(Model.BusinessLocations.PageCount < Model.BusinessLocations.PageNumber ? 0 : Model.BusinessLocations.PageNumber) of @Model.BusinessLocations.PageCount
 
-        @Html.PagedListPager(Model.BusinessLocations, CurrentPage => Url.Action("Index", new { CurrentPage, SortOrder = ViewBag.CurrentSort, CurrentFilter = ViewBag.CurrentFilter }))
-           
+        @Html.PagedListPager(Model.BusinessLocations, CurrentPage => Url.Action("Index", new { CurrentPage, SortOrder = Model.SoQLParams.CurrentSort, SearchQuery = Model.SoQLParams.CurrentFilter }))
+
+        <br />
+        <p>@Model.DataSetMetaInformation</p>
+
     </div>
 </div>

@@ -41,7 +41,7 @@ namespace SocrataSodaNet.Helpers
             //read metadata of a dataset using the resource identifier (Socrata 4x4)
             var metadata = client.GetMetadata(_APIEndPoint4x4);
 
-            return string.Format("{0} has {1} views. Last updated on {2:g}", metadata.Name, metadata.ViewsCount, metadata.RowsLastUpdated);
+            return string.Format("Dataset {0} has {1} views. Last updated on {2:g}", metadata.Name, metadata.ViewsCount, metadata.RowsLastUpdated);
         }
 
         /// <summary>
@@ -78,6 +78,12 @@ namespace SocrataSodaNet.Helpers
             
             //Column alias must not collide with input column name, i.e. don't alias 'city' as 'city'
             string[] aliases = new[] { "LegalName", "DBA", "IssuedOn" };
+
+            //Make sure our sorting by column is clean and protect against injection
+            if(!columns.Contains(OrderBy.ToLower()))
+            {
+                OrderBy = string.Empty;
+            }
 
             //using SoQL and a fluent query building syntax
             var soql = new SoqlQuery().Select(columns)

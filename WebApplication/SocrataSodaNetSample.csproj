@@ -135,6 +135,7 @@
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Helpers\SODAHelper.cs" />
+    <Compile Include="Helpers\SoQLQueryParams.cs" />
     <Compile Include="Helpers\Utilities.cs" />
     <Compile Include="Models\BusinessLocation.cs" />
     <Compile Include="Global.asax.cs">
