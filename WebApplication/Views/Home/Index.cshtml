@@ -19,7 +19,7 @@
         @using (Html.BeginForm("Index", "Home", FormMethod.Get))
         {
             <p>
-                Filter Name: @Html.TextBox("SearchQuery", Model.CurrentFilter as string)
+                Filter by: @Html.TextBox("SearchQuery", Model.CurrentFilter as string)
                 <input type="submit" value="Search" />
             </p>
         }
