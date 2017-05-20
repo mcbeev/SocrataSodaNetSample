@@ -1,9 +1,9 @@
 ﻿using PagedList;
 using SODA;
 using System.Linq;
-using WebApplication.Models;
+using SocrataSodaNet.Models;
 
-namespace WebApplication.Helpers
+namespace SocrataSodaNet.Helpers
 {
     public static class SODAHelper
     {

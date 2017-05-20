@@ -1,10 +1,10 @@
 ﻿using System.Web.Mvc;
-using WebApplication.Helpers;
+using SocrataSodaNet.Helpers;
 using KenticoCloud.Delivery;
 using System.Threading.Tasks;
-using WebApplication.Populaters;
+using SocrataSodaNet.Populaters;
 
-namespace WebApplication.Controllers
+namespace SocrataSodaNet.Controllers
 {
     public class AboutController : BaseController
     {

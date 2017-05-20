@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using WebApplication.Models;
+using SocrataSodaNet.Models;
 
-namespace WebApplication.ViewModels
+namespace SocrataSodaNet.ViewModels
 {
     public class HomeViewModel : BaseViewModel
     {

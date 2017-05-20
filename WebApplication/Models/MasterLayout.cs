@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using KenticoCloud.Delivery;
 
-namespace WebApplication.Models
+namespace SocrataSodaNet.Models
 {
     public partial class MasterLayout
     {

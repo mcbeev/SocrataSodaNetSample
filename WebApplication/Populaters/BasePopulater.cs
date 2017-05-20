@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Threading.Tasks;
-using WebApplication.Models;
-using WebApplication.ViewModels;
+using SocrataSodaNet.Models;
+using SocrataSodaNet.ViewModels;
 using KenticoCloud.Delivery;
 using System.Configuration;
 using System.Net;
 
-namespace WebApplication.Populaters
+namespace SocrataSodaNet.Populaters
 {
  
     public class BasePopulater<TViewModel> where TViewModel : BaseViewModel, new()
