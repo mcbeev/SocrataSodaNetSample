@@ -130,7 +130,9 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Helpers\SODAHelper.cs" />
     <Compile Include="Helpers\Utilities.cs" />
@@ -139,13 +141,18 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CustomTypeProvider.cs" />
+    <Compile Include="Models\GenericPage.cs" />
     <Compile Include="Models\HomePage.cs" />
     <Compile Include="Models\MasterLayout.cs" />
     <Compile Include="Models\PageMetaMeta.cs" />
+    <Compile Include="Populaters\ContactPopulater.cs" />
     <Compile Include="Populaters\BasePopulater.cs" />
+    <Compile Include="Populaters\AboutPopulater.cs" />
     <Compile Include="Populaters\HomePopulater.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\ContactViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -178,12 +185,12 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\About\Index.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Content\Scripts\jquery-1.10.2.min.map" />
     <None Include="Properties\PublishProfiles\sodanetsample - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\sodanetsample - Web Deploy.pubxml" />
+    <Content Include="Views\Contact\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

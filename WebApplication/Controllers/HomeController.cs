@@ -20,16 +20,5 @@ namespace WebApplication.Controllers
         }
         
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "A Sample Application designed to show SODA.Net";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            return View();
-        }
     }
 }
