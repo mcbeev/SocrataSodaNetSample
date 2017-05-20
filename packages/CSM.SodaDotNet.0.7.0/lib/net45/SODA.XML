@@ -92,6 +92,92 @@
             This is marked as internal since it will be derived from the <see cref="P:SODA.Models.LocationColumn.HumanAddress"/> property.
             </remarks>
         </member>
+        <member name="T:SODA.Models.PhoneColumn">
+            <summary>
+            A class to model the Socrata Phone column type.
+            </summary>
+        </member>
+        <member name="M:SODA.Models.PhoneColumn.#ctor">
+            <summary>
+            Initialize a new PhoneColumn object.
+            </summary>
+        </member>
+        <member name="M:SODA.Models.PhoneColumn.#ctor(System.String)">
+            <summary>
+            Initialize a new PhoneColumn object from its JSON string representation.
+            </summary>
+        </member>
+        <member name="M:SODA.Models.PhoneColumn.OnSerializingMethod(System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            On serializing, convert this PhoneColumn's <see cref="P:SODA.Models.PhoneColumn.PhoneType"/> property to its string representation.
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:SODA.Models.PhoneColumn.OnDeserializedMethod(System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            On deserializing, attempt to convert this PhoneColumn's string representation of a <see cref="P:SODA.Models.PhoneColumn.PhoneType"/> into the correct enumeration.
+            </summary>
+            <param name="contex"></param>
+        </member>
+        <member name="P:SODA.Models.PhoneColumn.PhoneNumber">
+            <summary>
+            Gets or sets the string representation of the phone_number value for this PhoneColumn.
+            </summary>
+            <remarks>
+            Setting the phone number with no punctuation (ex: 3609022700) will allow the phone to formatted by the consumer. This is not a requirement.
+            </remarks>
+        </member>
+        <member name="P:SODA.Models.PhoneColumn.PhoneType">
+            <summary>
+            Gets or sets the string representation of the phone_type value for this PhoneColumn.
+            </summary>
+        </member>
+        <member name="P:SODA.Models.PhoneColumn.PhoneTypeString">
+            <summary>
+            The phone type string that will used for serialization
+            </summary>
+            <remarks>
+            This is marked as internal since it will be set based on the <see cref="P:SODA.Models.PhoneColumn.PhoneType"/> property.
+            </remarks>
+        </member>
+        <member name="T:SODA.Models.PhoneColumnType">
+            <summary>
+            Enumeration of the phone types for a phone column.
+            </summary>
+            <remarks>
+            Discovered by setting a phone column on the web site to each of the available items in the list, then pulling the dataset as JSON.
+            </remarks>
+        </member>
+        <member name="F:SODA.Models.PhoneColumnType.Undefined">
+            <summary>
+            Value representing the type of the number is not set or unknown.
+            </summary>
+        </member>
+        <member name="F:SODA.Models.PhoneColumnType.Cell">
+            <summary>
+            Value representing cell number.
+            </summary>
+        </member>
+        <member name="F:SODA.Models.PhoneColumnType.Home">
+            <summary>
+            Value representing home number.
+            </summary>
+        </member>
+        <member name="F:SODA.Models.PhoneColumnType.Work">
+            <summary>
+            Value representing a work number.
+            </summary>
+        </member>
+        <member name="F:SODA.Models.PhoneColumnType.Fax">
+            <summary>
+            Value representing a fax number.
+            </summary>
+        </member>
+        <member name="F:SODA.Models.PhoneColumnType.Other">
+            <summary>
+            Value representing some other type of phone number.
+            </summary>
+        </member>
         <member name="T:SODA.Models.WebsiteUrlColumn">
             <summary>
             A class to model the Socrata Website URL column type.
@@ -131,7 +217,7 @@
             Implementation detail representing a request/response to/from a SODA endpoint.
             </summary>
         </member>
-        <member name="M:SODA.SodaRequest.#ctor(System.Uri,System.String,System.String,System.String,System.String,SODA.SodaDataFormat,System.String)">
+        <member name="M:SODA.SodaRequest.#ctor(System.Uri,System.String,System.String,System.String,System.String,SODA.SodaDataFormat,System.String,System.Nullable{System.Int32})">
             <summary>
             Initialize a new SodaRequest.
             </summary>
@@ -142,6 +228,7 @@
             <param name="password">The password for the specified Socrata <paramref name="username"/>.</param>
             <param name="dataFormat">One of the data-interchange formats that Socrata supports. The default is JSON.</param>
             <param name="payload">The body of the request.</param>
+            <param name="timeout">The number of milliseconds to wait for a response before throwing a Timeout WebException.</param>
         </member>
         <member name="M:SODA.SodaRequest.ParseResponse``1">
             <summary>
@@ -149,6 +236,12 @@
             </summary>
             <typeparam name="TResult">The target type during response deserialization.</typeparam>
             <exception cref="T:System.InvalidOperationException">Thrown if response deserialization into the requested type fails.</exception>
+        </member>
+        <member name="M:SODA.SodaRequest.#ctor">
+            <summary>
+            Disable unsupported security protocols for all requests.
+            See https://support.socrata.com/hc/en-us/articles/235267087 for more information.
+            </summary>
         </member>
         <member name="P:SODA.SodaRequest.webRequest">
             <summary>
@@ -220,7 +313,17 @@
             In other words, this method hides the fact that Socrata will only return 1000 rows at a time, unless explicity told not to via the SoqlQuery argument.
             </remarks>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:SODA.Resource`1.Query(SODA.SoqlQuery)" -->
+        <member name="M:SODA.Resource`1.Query(SODA.SoqlQuery)">
+            <summary>
+            Query this Resource using the specified <see cref="T:SODA.SoqlQuery"/>.
+            </summary>
+            <param name="soqlQuery">A <see cref="T:SODA.SoqlQuery"/> to execute against this Resource.</param>
+            <returns>A collection of entities of type <typeparamref name="TRow"/>.</returns>
+            <remarks>
+            This is a convenience method for the generic <see cref="M:SODA.Resource`1.Query``1(SODA.SoqlQuery)"/>, and is useful if you want the result of a query 
+            to be typed to <typeparamref name="TRow"/> (this Resource's underlying record type).
+            </remarks>
+        </member>
         <member name="M:SODA.Resource`1.GetRows">
             <summary>
             Get all of the rows contained in this Resource.
@@ -681,6 +784,11 @@
             The querystring key for the SoQL Group clause.
             </summary>
         </member>
+        <member name="F:SODA.SoqlQuery.HavingKey">
+            <summary>
+            The querystring key for the SoQL Having clause.
+            </summary>
+        </member>
         <member name="F:SODA.SoqlQuery.LimitKey">
             <summary>
             The querystring key for the SoQL Limit clause.
@@ -694,6 +802,11 @@
         <member name="F:SODA.SoqlQuery.SearchKey">
             <summary>
             The querystring key for the SoQL full-text search clause.
+            </summary>
+        </member>
+        <member name="F:SODA.SoqlQuery.QueryKey">
+            <summary>
+            The querystring key for a raw SoQL query.
             </summary>
         </member>
         <member name="F:SODA.SoqlQuery.DefaultSelect">
@@ -727,13 +840,19 @@
             The maximum number of results a query may return.
             </summary>
             <remarks>
-            The maximum that can be requested with limit is 1000 (http://dev.socrata.com/docs/queries.html#the_limit_parameter)
+            The maximum that can be requested with limit is 50,000 (http://dev.socrata.com/docs/paging.html)
             </remarks>
         </member>
         <member name="M:SODA.SoqlQuery.#ctor">
             <summary>
-            Construct a new SoqlQuery using the defaults.
+            Initialize a new SoqlQuery object.
             </summary>
+        </member>
+        <member name="M:SODA.SoqlQuery.#ctor(System.String)">
+            <summary>
+            Initialize a new SoqlQuery object with the given query string. Individual SoQL clauses cannot be overridden using the fluent syntax.
+            </summary>
+            <param name="query">One or more SoQL clauses and/or sub-queries.</param>
         </member>
         <member name="M:SODA.SoqlQuery.ToString">
             <summary>
@@ -793,6 +912,21 @@
             Sets this SoqlQuery's group clause using the specified columns.
             </summary>
             <param name="columns">A list of column names that define how rows are grouped during execution of this SoqlQuery.</param>
+            <returns>This SoqlQuery.</returns>
+        </member>
+        <member name="M:SODA.SoqlQuery.Having(System.String)">
+            <summary>
+            Sets this SoqlQuery's having clause using the specified predicate.
+            </summary>
+            <param name="predicate">A filter to be applied to the results of an aggregation using <see cref="M:SODA.SoqlQuery.Group(System.String[])"/>.</param>
+            <returns>This SoqlQuery.</returns>
+        </member>
+        <member name="M:SODA.SoqlQuery.Having(System.String,System.Object[])">
+            <summary>
+            Sets this SoqlQuery's having clause using the specified format string and substitution arguments.
+            </summary>
+            <param name="format">A composite format string, suitable for use with String.Format()</param>
+            <param name="args">An array of objects to format.</param>
             <returns>This SoqlQuery.</returns>
         </member>
         <member name="M:SODA.SoqlQuery.Limit(System.Int32)">
@@ -859,6 +993,11 @@
             Gets the columns that define grouping for the results of this SoqlQuery.
             </summary>
         </member>
+        <member name="P:SODA.SoqlQuery.HavingClause">
+            <summary>
+            Gets the predicate that this SoqlQuery will use for aggregate filtering.
+            </summary>
+        </member>
         <member name="P:SODA.SoqlQuery.LimitValue">
             <summary>
             Gets the maximum number of results that this SoqlQuery will return.
@@ -872,6 +1011,11 @@
         <member name="P:SODA.SoqlQuery.SearchText">
             <summary>
             Gets the input to a full-text search that this SoqlQuery will perform.
+            </summary>
+        </member>
+        <member name="P:SODA.SoqlQuery.RawQuery">
+            <summary>
+            Gets the raw SoQL query, combining one or more SoQL clauses and/or sub-queries, that this SoqlQuery will execute.
             </summary>
         </member>
         <member name="T:SODA.SodaClient">
@@ -889,8 +1033,8 @@
             The Socrata application token that this client uses for all requests.
             </summary>
             <remarks>
-            Since SodaClient uses Basic Authentication, the application token is only used as a means to reduce API throttling on the part of Socrata.
-            See http://dev.socrata.com/docs/app-tokens.html for more information.
+            Socrata Application Tokens are not required, but are recommended for expanded API quotas.
+            See https://dev.socrata.com/docs/app-tokens.html for more information.
             </remarks>
         </member>
         <member name="F:SODA.SodaClient.Username">
@@ -902,35 +1046,24 @@
             See http://dev.socrata.com/docs/authentication.html for more information.
             </remarks>
         </member>
-        <member name="M:SODA.SodaClient.read``1(System.Uri,SODA.SodaDataFormat)">
-            <summary>
-            Send an HTTP GET request to the specified URI and intepret the result as TResult.
-            </summary>
-            <typeparam name="TResult">The .NET class to use for response deserialization.</typeparam>
-            <param name="uri">A uniform resource identifier that is the target of this GET request.</param>
-            <param name="dataFormat">One of the data-interchange formats that Socrata supports. The default is JSON.</param>
-            <returns>The HTTP response, deserialized into an object of type <typeparamref name="TResult"/>.</returns>
-        </member>
-        <member name="M:SODA.SodaClient.write``2(System.Uri,System.String,``0)">
-            <summary>
-            Send an HTTP request of the specified method and interpret the result.
-            </summary>
-            <typeparam name="TPayload">The .NET class that represents the request payload.</typeparam>
-            <typeparam name="TResult">The .NET class to use for response deserialization.</typeparam>
-            <param name="uri">A uniform resource identifier that is the target of this GET request.</param>
-            <param name="method">One of POST, PUT, or DELETE</param>
-            <param name="payload">An object graph to serialize and send with the request.</param>
-            <returns>The HTTP response, deserialized into an object of type <typeparamref name="TResult"/>.</returns>
-        </member>
         <member name="M:SODA.SodaClient.#ctor(System.String,System.String,System.String,System.String)">
             <summary>
-            Initialize a new SodaClient for the specified Socrata host, using the specified application token and the specified Authentication credentials.
+            Initialize a new SodaClient for the specified Socrata host, using the specified application token and Authentication credentials.
             </summary>
             <param name="host">The Socrata Open Data Portal that this client will target.</param>
             <param name="appToken">The Socrata application token that this client will use for all requests.</param>
             <param name="username">The user account that this client will use for Authentication during each request.</param>
             <param name="password">The password for the specified <paramref name="username"/> that this client will use for Authentication during each request.</param>
-            <exception cref="T:System.ArgumentException">Thrown if either of <paramref name="host"/> or <paramref name="appToken"/> is null or empty.</exception>
+            <exception cref="T:System.ArgumentException">Thrown if no <paramref name="host"/> is provided.</exception>
+        </member>
+        <member name="M:SODA.SodaClient.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Initialize a new SodaClient for the specified Socrata host, using the specified Authentication credentials.
+            </summary>
+            <param name="host">The Socrata Open Data Portal that this client will target.</param>
+            <param name="username">The user account that this client will use for Authentication during each request.</param>
+            <param name="password">The password for the specified <paramref name="username"/> that this client will use for Authentication during each request.</param>
+            <exception cref="T:System.ArgumentException">Thrown if no <paramref name="host"/> is provided.</exception>
         </member>
         <member name="M:SODA.SodaClient.#ctor(System.String,System.String)">
             <summary>
@@ -938,7 +1071,7 @@
             </summary>
             <param name="host">The Socrata Open Data Portal that this client will target.</param>
             <param name="appToken">The Socrata application token that this client will use for all requests.</param>
-            <exception cref="T:System.ArgumentException">Thrown if either of <paramref name="host"/> or <paramref name="appToken"/> is null or empty.</exception>
+            <exception cref="T:System.ArgumentException">Thrown if no <paramref name="host"/> is provided.</exception>
         </member>
         <member name="M:SODA.SodaClient.GetMetadata(System.String)">
             <summary>
@@ -966,6 +1099,22 @@
             <param name="resourceId">The identifier (4x4) for a resource on the Socrata host to target.</param>
             <returns>A Resource object with an underlying row set of type <typeparamref name="TRow"/>.</returns>
             <exception cref="T:System.ArgumentOutOfRangeException">Thrown if the specified <paramref name="resourceId"/> does not match the Socrata 4x4 pattern.</exception>
+        </member>
+        <member name="M:SODA.SodaClient.Query``1(SODA.SoqlQuery,System.String)">
+            <summary>
+            Query using the specified <see cref="T:SODA.SoqlQuery"/> against the specified resource identifier.
+            </summary>
+            <typeparam name="TRow">The .NET class that represents the type of the underlying rows in the result set of this query.</typeparam>
+            <param name="soqlQuery">A <see cref="T:SODA.SoqlQuery"/> to execute against the Resource.</param>
+            <param name="resourceId">The identifier (4x4) for a resource on the Socrata host to target.</param>
+            <returns>A collection of entities of type <typeparamref name="TRow"/>.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown if the specified <paramref name="resourceId"/> does not match the Socrata 4x4 pattern.</exception>
+            <remarks>
+            By default, Socrata will only return the first 1000 rows unless otherwise specified in SoQL using the Limit and Offset parameters.
+            This method checks the specified SoqlQuery object for either the Limit or Offset parameter, and honors those parameters if present.
+            If both Limit and Offset are not part of the SoqlQuery, this method attempts to retrieve all rows in the dataset across all pages.
+            In other words, this method hides the fact that Socrata will only return 1000 rows at a time, unless explicity told not to via the SoqlQuery argument.
+            </remarks>
         </member>
         <member name="M:SODA.SodaClient.Upsert(System.String,SODA.SodaDataFormat,System.String)">
             <summary>
@@ -1045,6 +1194,32 @@
             <exception cref="T:System.ArgumentOutOfRangeException">Thrown if the specified <paramref name="resourceId"/> does not match the Socrata 4x4 pattern.</exception>
             <exception cref="T:System.InvalidOperationException">Thrown if this SodaClient was initialized without authentication credentials.</exception>
         </member>
+        <member name="M:SODA.SodaClient.read``1(System.Uri,SODA.SodaDataFormat)">
+            <summary>
+            Send an HTTP GET request to the specified URI and intepret the result as TResult.
+            </summary>
+            <typeparam name="TResult">The .NET class to use for response deserialization.</typeparam>
+            <param name="uri">A uniform resource identifier that is the target of this GET request.</param>
+            <param name="dataFormat">One of the data-interchange formats that Socrata supports. The default is JSON.</param>
+            <returns>The HTTP response, deserialized into an object of type <typeparamref name="TResult"/>.</returns>
+        </member>
+        <member name="M:SODA.SodaClient.write``2(System.Uri,System.String,``0)">
+            <summary>
+            Send an HTTP request of the specified method and interpret the result.
+            </summary>
+            <typeparam name="TPayload">The .NET class that represents the request payload.</typeparam>
+            <typeparam name="TResult">The .NET class to use for response deserialization.</typeparam>
+            <param name="uri">A uniform resource identifier that is the target of this GET request.</param>
+            <param name="method">One of POST, PUT, or DELETE</param>
+            <param name="payload">An object graph to serialize and send with the request.</param>
+            <returns>The HTTP response, deserialized into an object of type <typeparamref name="TResult"/>.</returns>
+        </member>
+        <member name="P:SODA.SodaClient.RequestTimeout">
+            <summary>
+            If set, the number of milliseconds to wait before requests to the <see cref="F:SODA.SodaClient.Host"/> timeout and throw a <see cref="T:System.Net.WebException"/>.
+            If unset, the default value is that of <see cref="P:System.Net.HttpWebRequest.Timeout"/>.
+            </summary>
+        </member>
         <member name="T:SODA.Utilities.JsonSerializationExtensions">
             <summary>
             Convenience methods for JSON serialization.
@@ -1073,7 +1248,7 @@
         </member>
         <member name="M:SODA.Utilities.SodaUri.enforceHttps(System.String)">
             <summary>
-            Ensure that the specified socrata host url uses the https protocol.
+            Ensure that the specified Socrata host url uses the https protocol.
             </summary>
             <param name="socrataHost">The Socrata host to target.</param>
             <returns>A SODA-compatible Url</returns>
@@ -1088,7 +1263,7 @@
         </member>
         <member name="M:SODA.Utilities.SodaUri.ForMetadata(System.String,System.String)">
             <summary>
-            Create a Uri for sending a request to the specified resource metadata on the specified domain.
+            Create a Uri for sending a request to the specified resource metadata on the specified Socrata host.
             </summary>
             <param name="socrataHost">The Socrata host to target.</param>
             <param name="resourceId">The identifier (4x4) for a resource on the Socrata host to target.</param>
@@ -1096,7 +1271,7 @@
         </member>
         <member name="M:SODA.Utilities.SodaUri.ForMetadataList(System.String,System.Int32)">
             <summary>
-            Create a Uri for sending a request to a catalog of resource metadata on the specified domain and page of the catalog.
+            Create a Uri for sending a request to a catalog of resource metadata on the specified Socrata host and page of the catalog.
             </summary>
             <param name="socrataHost">The Socrata host to target.</param>
             <param name="page">The page of the resource metadata catalog on the Socrata host to target.</param>
@@ -1104,7 +1279,7 @@
         </member>
         <member name="M:SODA.Utilities.SodaUri.ForResourceAPI(System.String,System.String,System.String)">
             <summary>
-            Create a Uri for sending a request to the specified resource on the specified domain.
+            Create a Uri for sending a request to the specified resource on the specified Socrata host.
             </summary>
             <param name="socrataHost">The Socrata host to target.</param>
             <param name="resourceId">The identifier (4x4) for a resource on the Socrata host to target.</param>
@@ -1117,7 +1292,7 @@
             </summary>
             <param name="socrataHost">The Socrata host to target.</param>
             <param name="resourceId">The identifier (4x4) for a resource on the Socrata host to target.</param>
-            <returns>A Uri pointing to the landing page of the specified resource on the specified Socrata doamin.</returns>
+            <returns>A Uri pointing to the landing page of the specified resource on the specified Socrata host.</returns>
         </member>
         <member name="M:SODA.Utilities.SodaUri.ForResourceAboutPage(System.String,System.String)">
             <summary>
@@ -1125,7 +1300,15 @@
             </summary>
             <param name="socrataHost">The Socrata host to target.</param>
             <param name="resourceId">The identifier (4x4) for a resource on the Socrata host to target.</param>
-            <returns>A Uri pointing to the landing page of the specified resource on the specified Socrata doamin.</returns>
+            <returns>A Uri pointing to the landing page of the specified resource on the specified Socrata host.</returns>
+        </member>
+        <member name="M:SODA.Utilities.SodaUri.ForResourceAPIPage(System.String,System.String)">
+            <summary>
+            Create a Uri to the Foundry-style API documentation page of the specified resource on the specified Socrata host.
+            </summary>
+            <param name="socrataHost">The Socrata host to target.</param>
+            <param name="resourceId">The identifier (4x4) for a resource on the Socrata host to target.</param>
+            <returns>A Uri pointing to the Foundry API documentation page of the specified resource on the specified Socrata host.</returns>
         </member>
         <member name="M:SODA.Utilities.SodaUri.ForQuery(System.String,System.String,SODA.SoqlQuery)">
             <summary>
